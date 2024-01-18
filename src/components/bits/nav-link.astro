@@ -1,0 +1,16 @@
+---
+interface Props {
+  href: string;
+  name: string;
+}
+
+const { href, name } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<li
+  class="text-sm sm:text-base text-zinc-800 hover:underline underline-offset-8 decoration-yellow-500 decoration-2 transition"
+  class:list={[{ "underline font-bold": pathname === href }]}
+>
+  <a {href}>{name}</a>
+</li>

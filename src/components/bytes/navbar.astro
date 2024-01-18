@@ -1,0 +1,22 @@
+---
+import NavbarWrapper from "../bits/navbar-wrapper.svelte";
+import NavLink from "../bits/nav-link.astro";
+---
+
+<NavbarWrapper client:load>
+  <div class="w-full max-w-7xl flex py-5 justify-between items-center">
+    <a
+      href="/"
+      class="text-lg sm:text-xl text-zinc-800 font-semibold tracking-widest group"
+      >qui<span class="text-yellow-500 group-hover:text-zinc-800 transition"
+        >llz</span
+      ></a
+    >
+    <ul class="flex gap-3 sm:gap-5">
+      <NavLink href="/" name="home" />
+      <NavLink href="/tags" name="tags" />
+      <NavLink href="/books" name="books" />
+      <NavLink href="/login" name="login" />
+    </ul>
+  </div>
+</NavbarWrapper>

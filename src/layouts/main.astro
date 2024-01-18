@@ -1,4 +1,6 @@
 ---
+import Navbar from "@/components/bytes/navbar.astro";
+
 interface Props {
   title?: string;
   description?: string;
@@ -22,8 +24,9 @@ const { title = "", description = "" } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="flex flex-col items-center">
-    <main class="h-screen w-full max-w-7xl">
+  <body class="relative flex flex-col items-center">
+    <Navbar />
+    <main class="w-full max-w-7xl pt-5">
       <slot />
     </main>
   </body>
