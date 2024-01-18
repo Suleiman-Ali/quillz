@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId     Int        @id @default(autoincrement())
+  username   String     @unique
+  email      String     @unique
+  password   String
+  type       UserType   @default(CUSTOMER)
+  firstName  String
+  lastName   String
+  profileUrl String?
+  createdAt  DateTime   @default(now())
+  cartBooks  CartBook[]
+  orders     Order[]
+  reviews    Review[]
+}
+
+enum UserType {
+  CUSTOMER
+  ADMIN
+}
+
+model Book {
+  bookId     Int         @id @default(autoincrement())
+  slug       String      @unique
+  title      String
+  overview   String
+  price      Decimal
+  coverUrl   String
+  createdAt  DateTime    @default(now())
+  reviews    Review[]
+  bookTags   BookTag[]
+  cartBooks  CartBook[]
+  orderItems OrderItem[]
+}
+
+model Review {
+  reviewId  Int      @id @default(autoincrement())
+  bookId    Int
+  userId    Int
+  text      String
+  rate      Int
+  createdAt DateTime @default(now())
+  book      Book     @relation(fields: [bookId], references: [bookId], onDelete: Restrict, onUpdate: Cascade)
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model Tag {
+  tagId       Int       @id @default(autoincrement())
+  slug        String    @unique
+  name        String
+  description String
+  createdAt   DateTime  @default(now())
+  tagBooks    BookTag[]
+}
+
+model BookTag {
+  bookTagId Int      @id @default(autoincrement())
+  bookId    Int
+  tagId     Int
+  createdAt DateTime @default(now())
+  book      Book     @relation(fields: [bookId], references: [bookId], onDelete: Restrict, onUpdate: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [tagId], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model CartBook {
+  cartBookId Int      @id @default(autoincrement())
+  bookId     Int
+  userId     Int
+  createdAt  DateTime @default(now())
+  book       Book     @relation(fields: [bookId], references: [bookId], onDelete: Restrict, onUpdate: Cascade)
+  user       User     @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Cascade)
+}
+
+model Order {
+  orderId    Int         @id @default(autoincrement())
+  userId     Int
+  totalPrice Decimal
+  status     StatusType  @default(PENDING)
+  createdAt  DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Cascade)
+  orderItems OrderItem[]
+}
+
+enum StatusType {
+  PENDING
+  SHIPPED
+  DELIVERED
+}
+
+model OrderItem {
+  orderItemId Int      @id @default(autoincrement())
+  orderId     Int
+  bookId      Int
+  createdAt   DateTime @default(now())
+  book        Book     @relation(fields: [bookId], references: [bookId], onDelete: Restrict, onUpdate: Cascade)
+  order       Order    @relation(fields: [orderId], references: [orderId], onDelete: Restrict, onUpdate: Cascade)
+}
