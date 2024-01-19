@@ -1,0 +1,62 @@
+---
+import prisma from "@/prisma/client";
+
+const tags = await prisma.tag.findMany({
+  include: { tagBooks: { include: { book: true } } },
+  take: 6,
+});
+---
+
+<header class="lg:flex gap-10">
+  <div
+    class="px-3 text-center items-center lg:w-3/5 lg:px-0 lg:text-left lg:items-start flex flex-col gap-5 sm:gap-7"
+  >
+    <h1
+      class="text-4xl sm:text-7xl font-bold text-zinc-800 leading-[1.175] tracking-wide"
+    >
+      Open Books,<br />Expand Minds
+    </h1>
+    <p
+      class="text-sm sm:text-base text-zinc-800 leading-[25px] sm:leading-[30px]"
+    >
+      Welcome to quillz, your premier destination for a diverse collection of
+      books that cater to every reader's taste. <span class="font-semibold"
+        >Immerse yourself in a world of captivating stories, insightful
+        knowledge, and literary wonders.</span
+      > Whether you're an avid reader, a student, or someone exploring new realms
+      of literature, we have something special waiting for you.
+    </p>
+    <a
+      href="/books"
+      class="flex items-center max-w-max font-medium transition text-sm sm:text-base text-zinc-700 hover:text-zinc-800 group"
+      ><span>explore books</span><svg
+        class="w-[13px] h-[13px] ms-2 rtl:rotate-180 group-hover:translate-x-1 translate-y-0.5 transition"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 5h12m0 0L9 1m4 4L9 9"></path>
+      </svg>
+    </a>
+  </div>
+  <div class="relative w-2/5 hidden lg:grid grid-cols-3 gap-2.5">
+    {
+      tags.map((tag) => (
+        <a href={`/books/${tag.tagBooks[1].book.slug}`}>
+          <img
+            class="h-full shadow rounded z-0 relative opacity-80"
+            src={tag.tagBooks[1].book.coverUrl}
+            alt={tag.tagBooks[1].book.title}
+            title={tag.tagBooks[1].book.title}
+          />
+        </a>
+      ))
+    }
+  </div>
+</header>

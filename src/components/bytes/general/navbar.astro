@@ -1,6 +1,6 @@
 ---
-import NavbarWrapper from "../bits/navbar-wrapper.svelte";
-import NavLink from "../bits/nav-link.astro";
+import NavbarWrapper from "../../bits/general/navbar-wrapper.svelte";
+import NavLink from "../../bits/general/nav-link.astro";
 ---
 
 <NavbarWrapper client:load>
@@ -8,8 +8,8 @@ import NavLink from "../bits/nav-link.astro";
     <a
       href="/"
       class="text-lg sm:text-xl text-zinc-800 font-semibold tracking-widest group"
-      >qui<span class="text-yellow-500 group-hover:text-zinc-800 transition"
-        >llz</span
+      >&lt;qui<span class="text-yellow-500 group-hover:text-zinc-800 transition"
+        >llz&gt;</span
       ></a
     >
     <ul class="flex gap-3 sm:gap-5">
@@ -20,3 +20,9 @@ import NavLink from "../bits/nav-link.astro";
     </ul>
   </div>
 </NavbarWrapper>
+
+<style>
+  a {
+    font-family: "Bree Serif", serif;
+  }
+</style>
