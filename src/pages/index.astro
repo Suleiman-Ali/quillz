@@ -1,8 +1,16 @@
 ---
+import FeaturedBooks from "@/components/bytes/home-page/featured-books.astro";
+import Categories from "@/components/bytes/home-page/featured-tags.astro";
 import Header from "@/components/bytes/home-page/header.astro";
 import Main from "@/layouts/main.astro";
+import prisma from "prisma/client";
+
+const tags = await prisma.tag.findMany({ include: { books: true }, take: 8 });
 ---
 
 <Main>
-  <Header />
+  <Header {tags} />
+  <FeaturedBooks title="Featured Books" {tags} idx={2} />
+  <Categories {tags} />
+  <FeaturedBooks title="Liked Books" {tags} idx={3} />
 </Main>

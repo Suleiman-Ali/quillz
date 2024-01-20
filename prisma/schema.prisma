@@ -29,16 +29,18 @@ enum UserType {
 
 model Book {
   bookId     Int         @id @default(autoincrement())
+  tagId      Int
   slug       String      @unique
   title      String
   overview   String
   price      Decimal
   coverUrl   String
+  author     String
   createdAt  DateTime    @default(now())
   reviews    Review[]
-  bookTags   BookTag[]
   cartBooks  CartBook[]
   orderItems OrderItem[]
+  tag        Tag         @relation(fields: [tagId], references: [tagId], onDelete: Restrict, onUpdate: Cascade)
 }
 
 model Review {
@@ -53,21 +55,12 @@ model Review {
 }
 
 model Tag {
-  tagId       Int       @id @default(autoincrement())
-  slug        String    @unique
+  tagId       Int      @id @default(autoincrement())
+  slug        String   @unique
   name        String
   description String
-  createdAt   DateTime  @default(now())
-  tagBooks    BookTag[]
-}
-
-model BookTag {
-  bookTagId Int      @id @default(autoincrement())
-  bookId    Int
-  tagId     Int
-  createdAt DateTime @default(now())
-  book      Book     @relation(fields: [bookId], references: [bookId], onDelete: Restrict, onUpdate: Cascade)
-  tag       Tag      @relation(fields: [tagId], references: [tagId], onDelete: Restrict, onUpdate: Cascade)
+  createdAt   DateTime @default(now())
+  books       Book[]
 }
 
 model CartBook {

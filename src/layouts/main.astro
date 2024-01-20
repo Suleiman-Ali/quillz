@@ -1,12 +1,14 @@
 ---
+import Footer from "@/components/bytes/general/footer.astro";
 import Navbar from "@/components/bytes/general/navbar.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  cls?: string;
 }
 
-const { title = "", description = "" } = Astro.props;
+const { title = "", description = "", cls = "" } = Astro.props;
 ---
 
 <!doctype html>
@@ -30,9 +32,10 @@ const { title = "", description = "" } = Astro.props;
   </head>
   <body class="px-3 relative flex flex-col items-center">
     <Navbar />
-    <main class="w-full max-w-7xl mt-[142px]">
+    <main class={`w-full max-w-7xl my-[142px] ${cls} flex flex-col gap-24`}>
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
 
@@ -42,10 +45,10 @@ const { title = "", description = "" } = Astro.props;
   *::after {
     font-family: "Roboto Slab", serif;
   }
-
   h1,
   h2,
-  h3 {
+  h3,
+  .serif {
     font-family: "Bree Serif", serif;
   }
 </style>
