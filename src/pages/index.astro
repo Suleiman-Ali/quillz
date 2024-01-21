@@ -8,7 +8,10 @@ import prisma from "prisma/client";
 const tags = await prisma.tag.findMany({ include: { books: true }, take: 8 });
 ---
 
-<Main>
+<Main
+  title="Open Books, Expand Minds"
+  description="Immerse yourself in a world of captivating stories, insightful knowledge, and literary wonders at Quillz - your premier destination for a diverse collection of books."
+>
   <Header {tags} />
   <FeaturedBooks title="Featured Books" {tags} idx={2} />
   <Categories {tags} />

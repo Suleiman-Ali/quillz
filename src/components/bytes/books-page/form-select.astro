@@ -1,0 +1,22 @@
+---
+import FormOption from "@/components/bits/books-page/form-option.astro";
+import FormSelectWrapper from "@/components/bits/books-page/form-select-wrapper.astro";
+
+interface Props {
+  name: string;
+  options: { value: string; text: string }[];
+  current: string;
+}
+
+const { name, options, current } = Astro.props;
+---
+
+<FormSelectWrapper {name}>
+  {
+    options.map(({ value, text }) => (
+      <FormOption {value} selected={value === current}>
+        {text}
+      </FormOption>
+    ))
+  }
+</FormSelectWrapper>
