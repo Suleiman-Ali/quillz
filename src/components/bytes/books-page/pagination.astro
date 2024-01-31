@@ -1,0 +1,30 @@
+---
+import constructBooksUrl from "@/utils/books-page/construct-books-url";
+
+interface Props {
+  pages: number[];
+  page: number;
+  params: URLSearchParams;
+}
+
+const { page, pages, params } = Astro.props;
+---
+
+{
+  pages.length > 1 && (
+    <div class="self-center flex items-center gap-2.5">
+      {pages.map((pg) => (
+        <a
+          href={constructBooksUrl(params, "page", pg)}
+          class="text-white py-1 px-3 rounded"
+          class:list={[
+            { "bg-zinc-700": page !== pg },
+            { "bg-zinc-800": page === pg },
+          ]}
+        >
+          {pg}
+        </a>
+      ))}
+    </div>
+  )
+}

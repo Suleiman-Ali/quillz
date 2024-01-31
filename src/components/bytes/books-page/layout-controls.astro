@@ -1,0 +1,30 @@
+---
+import constructBooksUrl from "@/utils/books-page/construct-books-url";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  params: URLSearchParams;
+  layout: string;
+}
+
+const { params, layout } = Astro.props;
+const layoutOptions = [
+  { value: "list", icon: "list" },
+  { value: "", icon: "grid" },
+];
+---
+
+{
+  layoutOptions.map(({ value, icon }) => (
+    <a
+      href={constructBooksUrl(params, "layout", value)}
+      class="p-2.5 text-white rounded"
+      class:list={[
+        { "bg-zinc-700": layout !== value },
+        { "bg-zinc-800": layout === value },
+      ]}
+    >
+      <Icon name={icon} size={30} />
+    </a>
+  ))
+}

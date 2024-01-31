@@ -1,73 +1,38 @@
 ---
-import Form from "@/components/bits/books-page/form.svelte";
-import FormSelect from "@/components/bytes/books-page/form-select.astro";
+import Divider from "@/components/bits/books-page/divider.astro";
+import BooksViews from "@/components/bytes/books-page/books-views.astro";
+import Form from "@/components/bytes/books-page/form.astro";
+import Pagination from "@/components/bytes/books-page/pagination.astro";
 import Main from "@/layouts/main.astro";
+import getBooksPagination from "@/utils/books-page/get-books-pagination";
 import prisma from "prisma/client";
 export const prerender = false;
 
-const search = Astro.url.searchParams.get("search") || "";
-const tag = Astro.url.searchParams.get("tag") || "";
-const sort = Astro.url.searchParams.get("sort") || "";
-const layout = Astro.url.searchParams.get("layout") || "";
+const params = Astro.url.searchParams;
+const search = params.get("search") || "";
+const tag = params.get("tag") || "";
+const sort = params.get("sort") || "";
+const pageStr = params.get("page") || "";
+const layout = params.get("layout") || "";
 
-const books = await prisma.book.findMany({
-  where: {
-    title: { contains: search || undefined },
-    tag: { slug: tag || undefined },
-  },
-  orderBy: { title: (sort as "asc" | "desc") || undefined },
-});
 const tags = await prisma.tag.findMany();
-
-const tagsOptions = [
-  { value: "", text: "Tag" },
-  ...tags.map((tag) => ({ value: tag.slug, text: tag.name })),
-];
-const sortOptions = [
-  { value: "", text: "Sort" },
-  { value: "asc", text: "Name/ASC" },
-  { value: "desc", text: "Name/DESC" },
-];
-const layoutOptions = [
-  { value: "", text: "Grid" },
-  { value: "list", text: "List" },
-];
+const where = {
+  title: { contains: search || undefined },
+  tag: { slug: tag || undefined },
+};
+const orderBy = { title: (sort as "asc" | "desc") || "asc" };
+const { page, pages, skip, take } = await getBooksPagination(where, pageStr);
+const books = await prisma.book.findMany({ where, orderBy, skip, take });
 ---
 
 <Main
   title="Explore Books"
   description="Discover a world of literary treasures at Quillz. Browse classics to bestsellers, finding the perfect book for your passions."
 >
-  <section class="flex flex-col gap-2.5">
-    <Form client:load>
-      <div class="w-full max-w-max flex items-center gap-1.5">
-        <FormSelect name="tag" options={tagsOptions} current={tag} />
-        <FormSelect name="sort" options={sortOptions} current={sort} />
-      </div>
-      <input
-        value={search}
-        type="text"
-        name="search"
-        placeholder="Search"
-        class="w-full rounded-md text-base outline-none bg-zinc-100 p-3 text-zinc-700 placeholder-zinc-500"
-      />
-      <FormSelect name="layout" options={layoutOptions} current={layout} />
-      <button
-        class="p-3 min-w-32 rounded bg-zinc-700 text-white hover:bg-zinc-800 transition"
-        >apply</button
-      >
-    </Form>
-
-    <div>
-      {
-        books.map((book, idx) => (
-          <div>
-            {idx + 1}: {book.title}
-          </div>
-        ))
-      }
-    </div>
+  <section class="flex flex-col gap-3">
+    <Form {tags} {tag} {search} {sort} {layout} {params} />
+    <Divider />
+    <BooksViews {books} {layout} />
+    <Pagination {pages} {params} {page} />
   </section>
 </Main>
-
-<!-- TODO: Search, Filter, Sort, Views, Pagination -->

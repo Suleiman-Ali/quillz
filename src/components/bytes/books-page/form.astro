@@ -1,0 +1,43 @@
+---
+import FormWrapper from "@/components/bits/books-page/form-wrapper.svelte";
+import type { Tag } from "@prisma/client";
+import FormSelect from "./form-select.astro";
+import LayoutControls from "./layout-controls.astro";
+
+interface Props {
+  params: URLSearchParams;
+  tags: Tag[];
+  search: string;
+  tag: string;
+  sort: string;
+  layout: string;
+}
+
+const { tags, search, tag, sort, layout, params } = Astro.props;
+
+const tagsOptions = [
+  { value: "", text: "All Tags" },
+  ...tags.map((tag) => ({ value: tag.slug, text: tag.name })),
+];
+const sortOptions = [
+  { value: "", text: "Name/ASC" },
+  { value: "desc", text: "Name/DESC" },
+];
+---
+
+<FormWrapper client:load>
+  <FormSelect name="sort" options={sortOptions} current={sort} />
+  <FormSelect name="tag" options={tagsOptions} current={tag} />
+  <input
+    value={search}
+    type="text"
+    name="search"
+    placeholder="Search"
+    class="w-full rounded-md text-base outline-none bg-zinc-100 p-3 text-zinc-700 placeholder-zinc-500"
+  />
+  <button
+    class="p-3 min-w-32 rounded bg-zinc-700 text-white hover:bg-zinc-800 transition"
+    >apply</button
+  >
+  <LayoutControls {params} {layout} />
+</FormWrapper>

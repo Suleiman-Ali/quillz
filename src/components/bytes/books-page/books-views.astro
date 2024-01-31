@@ -1,0 +1,28 @@
+---
+import type { Book } from "@prisma/client";
+import GridBook from "../general/grid-book.astro";
+import ListBook from "./list-book.astro";
+
+interface Props {
+  books: Book[];
+  layout: string;
+}
+
+const { books, layout } = Astro.props;
+---
+
+{
+  layout ? (
+    <div class="grid grid-cols-3 gap-3">
+      {books.map((book) => (
+        <ListBook {book} />
+      ))}
+    </div>
+  ) : (
+    <div class="grid grid-cols-7 gap-2.5">
+      {books.map((book) => (
+        <GridBook {book} />
+      ))}
+    </div>
+  )
+}

@@ -1,0 +1,26 @@
+---
+import type { Book } from "@prisma/client";
+
+interface Props {
+  book: Book;
+}
+
+const { book } = Astro.props;
+---
+
+<a href={`/books/${book.slug}`} class="max-w-xs flex flex-col gap-0.5 group">
+  <img
+    src={book.coverUrl}
+    alt={book.title}
+    title={book.title}
+    class="w-full rounded shadow group-hover:shadow-md group-hover:-translate-y-1 transition"
+  />
+  <p
+    class="text-sm sm:text-base md:text-lg lg:text-xl font-medium text-zinc-800 serif mt-2.5"
+  >
+    {book.title}
+  </p>
+  <p class="text-xs sm:text-sm text-zinc-500">
+    {book.author}
+  </p>
+</a>

@@ -32,7 +32,7 @@ model Book {
   tagId      Int
   slug       String      @unique
   title      String
-  overview   String
+  overview   String      @db.LongText
   price      Decimal
   coverUrl   String
   author     String
