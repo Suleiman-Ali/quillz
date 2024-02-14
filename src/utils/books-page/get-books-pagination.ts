@@ -1,7 +1,6 @@
 import prisma from "prisma/client";
 
 const LIMIT = 21;
-// general
 export default async function getBooksPagination(where: any, pageStr: string) {
   const count = await prisma.book.count({
     where,

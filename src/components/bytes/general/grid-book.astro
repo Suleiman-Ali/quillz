@@ -8,7 +8,7 @@ interface Props {
 const { book } = Astro.props;
 ---
 
-<a href={`/books/${book.slug}`} class="max-w-xs flex flex-col gap-0.5 group">
+<a href=`/books/${book.slug}` class="max-w-xs flex flex-col gap-0.5 group">
   <img
     src={book.coverUrl}
     alt={book.title}

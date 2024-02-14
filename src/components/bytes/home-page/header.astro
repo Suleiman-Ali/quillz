@@ -49,7 +49,7 @@ const { tags } = Astro.props;
   <div class="relative w-2/5 hidden lg:grid grid-cols-3 gap-2.5">
     {
       tags.slice(0, 6).map((tag) => (
-        <a href={`/books/${tag.books[1].slug}`}>
+        <a href=`/books/${tag.books[1].slug}`>
           <img
             class="h-full shadow rounded z-1 relative opacity-80 hover:opacity-90 hover:scale-105 transition"
             src={tag.books[1].coverUrl}

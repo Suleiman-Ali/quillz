@@ -1,22 +1,32 @@
 ---
-import FormOption from "@/components/bits/books-page/form-option.astro";
-import FormSelectWrapper from "@/components/bits/books-page/form-select-wrapper.astro";
+import Clear from "@/components/bits/books-page/clear.astro";
 
 interface Props {
-  name: string;
   options: { value: string; text: string }[];
   current: string;
+  name: string;
+  params: URLSearchParams;
 }
 
-const { name, options, current } = Astro.props;
+const { options, current, name, params } = Astro.props;
 ---
 
-<FormSelectWrapper {name}>
-  {
-    options.map(({ value, text }) => (
-      <FormOption {value} selected={value === current}>
-        {text}
-      </FormOption>
-    ))
-  }
-</FormSelectWrapper>
+<div class="relative w-full max-w-[10.5rem]">
+  <select
+    class="p-3 w-full text-base text-zinc-700 bg-zinc-100 rounded outline-none border-none appearance-none"
+    {name}
+  >
+    {
+      options.map(({ text, value }) => (
+        <option
+          {value}
+          selected={current === value}
+          class="appearance-none text-base text-zinc-700 bg-zinc-100 border-none outline-none"
+        >
+          {text}
+        </option>
+      ))
+    }
+  </select>
+  {current.length > 0 && <Clear {params} {name} />}
+</div>

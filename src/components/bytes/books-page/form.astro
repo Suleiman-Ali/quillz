@@ -1,8 +1,9 @@
 ---
-import FormWrapper from "@/components/bits/books-page/form-wrapper.svelte";
 import type { Tag } from "@prisma/client";
 import FormSelect from "./form-select.astro";
 import LayoutControls from "./layout-controls.astro";
+import FormInput from "@/components/bytes/books-page/form-input.astro";
+import FormContainer from "@/components/bits/books-page/form-container.svelte";
 
 interface Props {
   params: URLSearchParams;
@@ -25,19 +26,14 @@ const sortOptions = [
 ];
 ---
 
-<FormWrapper client:load>
-  <FormSelect name="sort" options={sortOptions} current={sort} />
-  <FormSelect name="tag" options={tagsOptions} current={tag} />
-  <input
-    value={search}
-    type="text"
-    name="search"
-    placeholder="Search"
-    class="w-full rounded-md text-base outline-none bg-zinc-100 p-3 text-zinc-700 placeholder-zinc-500"
-  />
+<FormContainer client:load>
+  <FormSelect name="sort" current={sort} options={sortOptions} {params} />
+  <FormSelect name="tag" current={tag} options={tagsOptions} {params} />
+  <FormInput name="search" value={search} {params} />
   <button
-    class="p-3 min-w-32 rounded bg-zinc-700 text-white hover:bg-zinc-800 transition"
+    type="submit"
+    class="text-base text-white bg-zinc-700 py-3 px-8 rounded hover:bg-zinc-800 transition-colors"
     >apply</button
   >
   <LayoutControls {params} {layout} />
-</FormWrapper>
+</FormContainer>

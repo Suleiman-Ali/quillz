@@ -1,0 +1,17 @@
+---
+import constructBooksUrl from "@/utils/books-page/construct-books-url";
+
+interface Props {
+  params: URLSearchParams;
+  name: string;
+}
+
+const { name, params } = Astro.props;
+---
+
+<a
+  href={constructBooksUrl(params, name, "")}
+  class="absolute flex justify-center items-center top-[50%] translate-y-[-50%] right-3 bg-zinc-400 hover:bg-zinc-700 transition-colors w-6 h-6 rounded-full text-white text-base"
+>
+  <span class="-translate-y-0.5">c</span>
+</a>

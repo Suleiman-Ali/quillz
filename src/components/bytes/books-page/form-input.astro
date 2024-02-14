@@ -1,0 +1,22 @@
+---
+import Clear from "@/components/bits/books-page/clear.astro";
+
+interface Props {
+  name: string;
+  value: string;
+  params: URLSearchParams;
+}
+
+const { name, value, params } = Astro.props;
+---
+
+<div class="relative w-full">
+  <input
+    {name}
+    {value}
+    type="text"
+    placeholder="Search"
+    class="w-full rounded-md text-base outline-none bg-zinc-100 p-3 text-zinc-700 placeholder-zinc-500"
+  />
+  {value.length > 0 && <Clear {params} {name} />}
+</div>

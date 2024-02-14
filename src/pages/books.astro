@@ -23,16 +23,17 @@ const where = {
 const orderBy = { title: (sort as "asc" | "desc") || "asc" };
 const { page, pages, skip, take } = await getBooksPagination(where, pageStr);
 const books = await prisma.book.findMany({ where, orderBy, skip, take });
+// new URL ();
 ---
 
 <Main
   title="Explore Books"
   description="Discover a world of literary treasures at Quillz. Browse classics to bestsellers, finding the perfect book for your passions."
 >
-  <section class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3">
     <Form {tags} {tag} {search} {sort} {layout} {params} />
     <Divider />
     <BooksViews {books} {layout} />
     <Pagination {pages} {params} {page} />
-  </section>
+  </div>
 </Main>

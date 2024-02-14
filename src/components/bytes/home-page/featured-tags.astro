@@ -9,14 +9,14 @@ interface Props {
 const { tags } = Astro.props;
 ---
 
-<FeaturedWrapper title="Featured Tags" text="explore tags" href="/tags">
+<FeaturedWrapper title="Featured Tags" text="Explore Tags" href="/tags">
   <div
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 gap-y-3"
   >
     {
       tags.map((tag) => (
         <a
-          href={`/tags/${tag.slug}`}
+          href=`/tags/${tag.slug}`
           class="w-full bg-white shadow pt-36 pb-14 px-3 relative rounded overflow-hidden flex flex-col gap-0.5 hover:-translate-y-1 hover:shadow-md transition"
         >
           <div class="w-full absolute top-0 left-0 h-24 bg-zinc-700" />
