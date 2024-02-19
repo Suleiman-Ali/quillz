@@ -6,6 +6,7 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
+  // preftech ??
   output: "hybrid",
   integrations: [svelte(), tailwind(), icon()],
   adapter: vercel(),
